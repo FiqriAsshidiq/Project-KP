@@ -76,8 +76,8 @@ class FasilitasController extends Controller
 
     public function destroy($id)
     {
-        $fas = Fasilitas::where('id', $id)->firstOrFail();
-        $fas->delete();
+        $fasilitas = Fasilitas::where('id', $id)->firstOrFail();
+        $fasilitas->delete();
         return redirect()->route('fasilitas')->with('success', 'Fasilitas berhasil dihapus.');
     }
 

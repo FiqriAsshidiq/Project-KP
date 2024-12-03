@@ -25,7 +25,7 @@ class UsersSeeder extends Seeder
             ],
             [
                 'name' => 'Kepala Hoseeping',
-                'email' => 'Kepala Hoskeeping@gmail.com',
+                'email' => 'Kepala@gmail.com',
                 'password' => Hash::make('password'), // pastikan untuk mengganti dengan password yang aman
                 'role_id' => '2',
                 'created_at' => now(),

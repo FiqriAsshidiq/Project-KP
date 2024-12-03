@@ -69,7 +69,7 @@ class KamarController extends Controller
     {
         $kamar = Kamar::where('id', $id)->firstOrFail();
         $kamar->delete();
-        return redirect()->route('Kamar')->with('success', 'Transaksi berhasil dihapus.');
+        return redirect()->route('kamar')->with('success', 'Transaksi berhasil dihapus.');
     }   
     
 }

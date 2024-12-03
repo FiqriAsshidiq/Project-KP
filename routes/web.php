@@ -41,7 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/fasilitas/search', [FasilitasController::class, 'search'])->name('fasilitas.search');
     Route::get('/laporan/fasilitas', [FasilitasController::class, 'laporanFasilitas'])->name('laporan.fasilitas');
     Route::get('/fasilitas/export', [FasilitasController::class, 'export'])->name('fasilitas.export');
-
     Route::get('/fasilitas/export-pdf/{bulan}/{tahun}', [FasilitasController::class, 'exportPdf'])->name('fasilitas.exportPdf');
 });
 
@@ -51,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
     Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
     Route::get('/transaksi/search', [TransaksiController::class, 'search'])->name('transaksi.search');
+    Route::get('/laporan/tarnsaksi', [TransaksiController::class, 'laporanTransaksi'])->name('laporan.transaksi');
+    Route::get('/transaksi/export', [TransaksiController::class, 'export'])->name('transaksi.export');
+    Route::get('/transaksi/export-pdf/{bulan}/{tahun}', [TransaksiController::class, 'exportPdf'])->name('transaksi.exportPdf');
 
 });
 
@@ -61,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kamar/{id}/edit', [KamarController::class, 'edit'])->name('kamar.edit');
     Route::put('/kamar/{id}', [KamarController::class, 'update'])->name('kamar.update');
     Route::delete('/kamar/{id}', [KamarController::class, 'destroy'])->name('kamar.destroy');
+
 });
 
 Route::middleware('auth')->group(function () {

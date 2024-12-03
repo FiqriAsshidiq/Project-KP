@@ -28,10 +28,26 @@
 
                     <br>
 
-                    
-                    <!-- Tombol Tambah dan Print Fasilitas -->
-                    <div class="mb-4">
+                    <div class="mb-4 px-8">
+                    <form method="GET" action="{{ route('transaksi.search') }}">
                         <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('transaksi.create') }}'">Tambah Transaksi</x-primary-button>
+                        <x-primary-button class="justify-center w-full sm:w-auto my-2.5" onclick="window.location='{{ route('transaksi.exportPdf', ['bulan' => $bulan ?? now()->month, 'tahun' => $tahun ?? now()->year]) }}'">Export PDF</x-primary-button>
+ 
+                        <label for="bulan" class="ml-[330px]" ></label>
+                        <select id="bulan" name="bulan" required>
+                            <option value="">Pilih Bulan</option>
+                            @for ($i = 1; $i <= 12; $i++)
+                                <option value="{{ $i }}">{{ \Carbon\Carbon::create()->month($i)->format('F') }}</option>
+                            @endfor
+                        </select>
+
+                        <label for="tahun" class="ml-[30px]" >Tahun</label>
+                        <input type="number" id="tahun" name="tahun" value="{{ now()->year }}" required>
+                        
+
+                        <x-primary-button class="justify-center w-full sm:w-auto my-2.5">Cari</x-primary-button>
+                        <br>
+                    </form>
                     </div>
                     
                     <br>

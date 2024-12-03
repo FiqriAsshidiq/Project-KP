@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Fasilitas;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class TransaksiController extends Controller
 {
@@ -50,33 +52,48 @@ class TransaksiController extends Controller
         $fasilitas->save();
         return redirect()->route('transaksi')->with('success', 'Transaksi berhasil ditambahkan.');
     }
-    
-    public function destroy($id)
-    {
-        $transaksi = Transaksi::where('id', $id)->firstOrFail();
-        $transaksi->delete();
-        return redirect()->route('transaksi')->with('success', 'Transaksi berhasil dihapus.');
-    }
-    
+        
     public function search(Request $request)
     {
-    // Validasi input bulan dan tahun
+        // Validasi input bulan dan tahun
         $request->validate([
             'bulan' => 'required|integer|between:1,12',
             'tahun' => 'required|integer|min:1900|max:' . date('Y'),
         ]);
-
-    // Ambil data fasilitas berdasarkan bulan dan tahun
+    
+        // Ambil data bulan dan tahun
         $bulan = $request->input('bulan');
         $tahun = $request->input('tahun');
-
-        $fasilitas = Fasilitas::whereYear('updated_at', $tahun)
-                    ->whereMonth('updated_at', $bulan)
+    
+        // Ambil data transaksi berdasarkan bulan dan tahun
+        $transaksi = Transaksi::with('fasilitas')
+                    ->whereYear('tanggal', $tahun)
+                    ->whereMonth('tanggal', $bulan)
+                    ->get();
+    
+        // Kirim data bulan, tahun, dan transaksi ke view
+        return view('transaksi.index', compact('transaksi', 'bulan', 'tahun'));
+    }
+    
+    public function exportPdf($bulan, $tahun)
+    {
+        // Mengambil data fasilitas berdasarkan bulan dan tahun yang dipilih
+        $transaksi = Transaksi::with('fasilitas')
+                    ->whereYear('tanggal', $tahun)
+                    ->whereMonth('tanggal', $bulan)
                     ->get();
 
-        // Tampilkan data yang sesuai dengan pencarian
-        return view('fasilitas.index', compact('fasilitas'));
+        // Mengenerate PDF dengan data fasilitas yang sesuai
+        $pdf = PDF::loadView('laporan.transaksi', compact('transaksi', 'bulan', 'tahun'));
+        
+    
+        // Mendownload PDF dengan nama file yang sesuai
+        return $pdf->download('laporan-transaksi-' . $bulan . '-' . $tahun . '.pdf');
     }
+
+
+
+
 
 
 }
