@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pengecekan_fasilitas', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal')->nullable();
             $table->UnsignedBigInteger('fasilitas_id');
             $table->integer('jumlah_rusak')->default(0);
             $table->timestamps();

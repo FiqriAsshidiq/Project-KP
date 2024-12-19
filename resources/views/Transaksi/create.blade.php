@@ -32,9 +32,9 @@
 
 
                         <div class="max-w-xl">
-                            <x-input-label for="penggunaan_barang" value="jumlah penggunaan barang" />
-                            <x-text-input id="penggunaan_barang" type="number" name="penggunaan_barang" class="mt-1 block w-full" value="{{ old('penggunaan_barang') }}" required />
-                            <x-input-error class="mt-2" :messages="$errors->get('penggunaan_barang')" />
+                            <x-input-label for="barang_keluar" value="jumlah penggunaan barang" />
+                            <x-text-input id="barang_keluar" type="number" name="barang_keluar" class="mt-1 block w-full" value="{{ old('barang_keluar') }}" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('barang_keluar')" />
                         </div>
 
 

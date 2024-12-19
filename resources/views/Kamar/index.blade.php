@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Kamar') }}
+    <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+    {{ __('Kamar') }}
         </h2>
     </x-slot>
     
@@ -59,13 +59,13 @@
                                 <td class=" text-center">
                                     <x-primary-button 
                                         x-data=""
-                                        onclick="window.location='{{ route('kamar.edit', $kamar->id) }}'">Edit
+                                        onclick="window.location='{{ route('kamar.edit', $kamar->id) }}'" class="bg-yellow-400">Edit
                                     </x-primary-button>
                                     <x-danger-button 
                                         x-data=""
                                         x-on:click.prevent="$dispatch('open-modal', 'confirm-kamar-deletion-{{ $kamar->id }}')"
                                         x-on:click="$dispatch('set-action', '{{ route('kamar.destroy', $kamar->id) }}')"
-                                        >{{ __('Delete') }}
+                                        >{{ __('Hapus') }}
                                     </x-danger-button>
 
                                 </td>
@@ -84,10 +84,10 @@
                                         </p>
                                         <div class="m-6 flex justify-end">
                                         <x-secondary-button x-on:click="$dispatch('close')">
-                                            {{ __('Cancel') }}
+                                            {{ __('Tidak') }}
                                         </x-secondary-button>
                                         <x-danger-button class="ml-8">
-                                            {{ __('Delete!!!') }}
+                                            {{ __('Hapus!!!') }}
                                         </x-danger-button>
                                     </div>
                                 </form>

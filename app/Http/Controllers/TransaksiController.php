@@ -29,7 +29,7 @@ class TransaksiController extends Controller
         $request->validate([
             'fasilitas_id' => 'required|exists:fasilitas,id',
             'barang_masuk' => 'required|integer|min:0',
-            'penggunaan_barang' => 'required|integer|min:0',
+            'barang_keluar' => 'required|integer|min:0',
         ]);
     
         // Simpan data transaksi
@@ -37,18 +37,18 @@ class TransaksiController extends Controller
             'tanggal' => now(),
             'fasilitas_id' => $request->fasilitas_id,
             'barang_masuk' => $request->barang_masuk,
-            'penggunaan_barang' => $request->penggunaan_barang, // Simpan penggunaan barang
+            'barang_keluar' => $request->barang_keluar, // Simpan penggunaan barang
         ]);
     
         // Temukan fasilitas berdasarkan ID
         $fasilitas = Fasilitas::find($request->fasilitas_id);
         $fasilitas->stok += $request->barang_masuk; 
-        if ($fasilitas->stok - $request->penggunaan_barang < 0) {
+        if ($fasilitas->stok - $request->barang_keluar < 0) {
             // Jika stok tersisa kurang dari 4, return dengan error message
             return redirect()->back()->with('error', 'tidak bisa mengambil barang, karena stok 0');
         }
-        $fasilitas->stok -= $request->penggunaan_barang;  // Kurangi stok
-        $fasilitas->penggunaan += $request->penggunaan_barang;  // Tambah penggunaan
+        $fasilitas->stok -= $request->barang_keluar;  // Kurangi stok
+        $fasilitas->penggunaan += $request->barang_keluar;  // Tambah penggunaan
         $fasilitas->save();
         return redirect()->route('transaksi')->with('success', 'Transaksi berhasil ditambahkan.');
     }

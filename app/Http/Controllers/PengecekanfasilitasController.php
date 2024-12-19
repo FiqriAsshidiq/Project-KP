@@ -29,11 +29,35 @@ class PengecekanfasilitasController extends Controller
         ]);
     
         Pengecekanfasilitas::create([
+            'tanggal' => now(),
             'fasilitas_id' => $request->fasilitas_id,
             'jumlah_rusak' => $request->jumlah_rusak,
         ]);
     
         return redirect()->route('pengecekan')->with('success', 'Pengecekan berhasil ditambahkan');
     }
+
+    public function search(Request $request)
+    {
+        // Validasi input bulan dan tahun
+        $request->validate([
+            'bulan' => 'required|integer|between:1,12',
+            'tahun' => 'required|integer|min:1900|max:' . date('Y'),
+        ]);
+    
+        // Ambil data bulan dan tahun
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+    
+        // Ambil data transaksi berdasarkan bulan dan tahun
+        $pengecekan_fasilitas = Pengecekanfasilitas::with('fasilitas')
+                                ->whereYear('tanggal', $tahun)
+                                ->whereMonth('tanggal', $bulan)
+                                ->get();
+
+        // Kirim data bulan, tahun, dan transaksi ke view
+        return view('pengecekan.index', compact('pengecekan_fasilitas', 'bulan', 'tahun'));
+    }
+
     
 }

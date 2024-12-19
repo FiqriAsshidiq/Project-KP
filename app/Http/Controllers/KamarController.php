@@ -21,10 +21,10 @@ class KamarController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'tipe_kamar' => 'required|in:single room,double room',
-            'status_fasilitas' => 'required|in:lengkap,tidak lengkap',
-            'kondisi_kamar' => 'required|in:bersih,belum bersih',
-            'status_kamar' => 'required|in:terisi,kosong',
+            'tipe_kamar' => 'required|string|max:30',
+            'status_fasilitas' => 'required|string|max:30',
+            'kondisi_kamar' => 'required|string|max:30',
+            'status_kamar' => 'required|string|max:30',
             'catatan' => 'nullable|string|max:50',
         ]);
 

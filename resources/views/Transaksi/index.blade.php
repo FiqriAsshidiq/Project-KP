@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
             {{ __('Transaksi') }}
         </h2>
     </x-slot>
@@ -31,9 +31,9 @@
                     <div class="mb-4 px-8">
                     <form method="GET" action="{{ route('transaksi.search') }}">
                         <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('transaksi.create') }}'">Tambah Transaksi</x-primary-button>
-                        <x-primary-button class="justify-center w-full sm:w-auto my-2.5" onclick="window.location='{{ route('transaksi.exportPdf', ['bulan' => $bulan ?? now()->month, 'tahun' => $tahun ?? now()->year]) }}'">Export PDF</x-primary-button>
+                        <x-primary-button class="justify-center w-full sm:w-auto my-2.5 mr-[230px] bg-red-600" onclick="window.location='{{ route('transaksi.exportPdf', ['bulan' => $bulan ?? now()->month, 'tahun' => $tahun ?? now()->year]) }}'">Export PDF</x-primary-button>
  
-                        <label for="bulan" class="ml-[330px]" ></label>
+                        <label for="bulan" class="mr-[70px]" ></label>
                         <select id="bulan" name="bulan" required>
                             <option value="">Pilih Bulan</option>
                             @for ($i = 1; $i <= 12; $i++)
@@ -41,7 +41,7 @@
                             @endfor
                         </select>
 
-                        <label for="tahun" class="ml-[30px]" >Tahun</label>
+                        <label for="tahun" class="ml-[55px]" >Tahun</label>
                         <input type="number" id="tahun" name="tahun" value="{{ now()->year }}" required>
                         
 
@@ -50,9 +50,8 @@
                     </form>
                     </div>
                     
-                    <br>
                 <x-table>
-                    <x-slot name="header">
+                    <x-slot name="header" >
                         <tr>
                             <th class=" text-center">No</th>
                             <th class=" text-center">Tanggal</th>
@@ -66,10 +65,10 @@
                     @foreach ($transaksi as $index => $transaksi)
                         <tr>
                             <td class=" text-center">{{ $index + 1 }}</td>
-                            <td class=" text-center">{{ $transaksi->tanggal }}</td>
+                            <td class=" text-center">{{ $transaksi->created_at }}</td>
                             <td class=" text-center">{{ $transaksi->fasilitas->nama_fasilitas }}</td> 
                             <td class=" text-center">{{ $transaksi->barang_masuk }}</td>
-                            <td class=" text-center">{{ $transaksi->penggunaan_barang }}</td> <!-- Akses penggunaan barang dari transaksi -->
+                            <td class=" text-center">{{ $transaksi->barang_keluar }}</td> <!-- Akses penggunaan barang dari transaksi -->
                             <td class=" text-center">
                                     <x-danger-button 
                                         x-data=""

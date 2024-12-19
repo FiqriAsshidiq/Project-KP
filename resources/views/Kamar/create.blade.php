@@ -17,8 +17,8 @@
                             <x-input-label for="tipe_kamar" value="Tipe Kamar" />
                             <x-select-input id="tipe_kamar" name="tipe_kamar" class="mt-1 block w-full" required>
                                 <option value="">Pilih Tipe Kamar</option>
-                                <option value="single room" {{ old('tipe_kamar') == 'single room' ? 'selected' : '' }}>Single Room</option>
-                                <option value="double room" {{ old('tipe_kamar') == 'double room' ? 'selected' : '' }}>Double Room</option>
+                                <option value="single room">Single Room</option>
+                                <option value="double room">Double Room</option>
                             </x-select-input>
                             <x-input-error class="mt-2" :messages="$errors->get('tipe_kamar')" />
                         </div>
@@ -28,8 +28,8 @@
                             <x-input-label for="status_fasilitas" value="Status Fasilitas" />
                             <x-select-input id="status_fasilitas" name="status_fasilitas" class="mt-1 block w-full" required>
                                 <option value="">Pilih Status Fasilitas</option>
-                                <option value="lengkap" {{ old('status_fasilitas') == 'lengkap' ? 'selected' : '' }}>Lengkap</option>
-                                <option value="tidak lengkap" {{ old('status_fasilitas') == 'tidak lengkap' ? 'selected' : '' }}>Tidak Lengkap</option>
+                                <option value="lengkap">Lengkap</option>
+                                <option value="tidak lengkap">Tidak Lengkap</option>
                             </x-select-input>
                             <x-input-error class="mt-2" :messages="$errors->get('status_fasilitas')" />
                         </div>
@@ -39,8 +39,8 @@
                             <x-input-label for="kondisi_kamar" value="Kondisi Kamar" />
                             <x-select-input id="kondisi_kamar" name="kondisi_kamar" class="mt-1 block w-full" required>
                                 <option value="">Pilih Kondisi Kamar</option>
-                                <option value="bersih" {{ old('kondisi_kamar') == 'bersih' ? 'selected' : '' }}>Bersih</option>
-                                <option value="belum bersih" {{ old('kondisi_kamar') == 'belum bersih' ? 'selected' : '' }}>Belum Bersih</option>
+                                <option value="bersih">Bersih</option>
+                                <option value="belum bersih">Belum Bersih</option>
                             </x-select-input>
                             <x-input-error class="mt-2" :messages="$errors->get('kondisi_kamar')" />
                         </div>
@@ -50,8 +50,8 @@
                             <x-input-label for="status_kamar" value="Status Kamar" />
                             <x-select-input id="status_kamar" name="status_kamar" class="mt-1 block w-full" required>
                                 <option value="">Pilih Status Kamar</option>
-                                <option value="terisi" {{ old('status_kamar') == 'terisi' ? 'selected' : '' }}>Terisi</option>
-                                <option value="kosong" {{ old('status_kamar') == 'kosong' ? 'selected' : '' }}>Kosong</option>
+                                <option value="terisi">Terisi</option>
+                                <option value="kosong">Kosong</option>
                             </x-select-input>
                             <x-input-error class="mt-2" :messages="$errors->get('status_kamar')" />
                         </div>

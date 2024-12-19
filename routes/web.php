@@ -70,6 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengecekan', [PengecekanfasilitasController::class, 'index'])->name('pengecekan');
     Route::get('/pengecekan/create', [PengecekanfasilitasController::class, 'create'])->name('pengecekan.create');
     Route::post('/pengecekan/store', [PengecekanfasilitasController::class, 'store'])->name('pengecekan.store');
+    Route::get('/pengecekan/search', [PengecekanfasilitasController::class, 'search'])->name('pengecekan.search');
+    Route::get('/pengecekan/export', [PengecekanController::class, 'export'])->name('pengecekan.export');
+    Route::get('/pengecekan/export-pdf/{bulan}/{tahun}', [PengecekanController::class, 'exportPdf'])->name('pengecekan.exportPdf');
+
 });
 
 

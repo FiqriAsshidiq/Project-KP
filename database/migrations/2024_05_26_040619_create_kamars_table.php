@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('kamars', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipe_kamar', ['single room', 'double room'])->nullable();
-            $table->enum('status_fasilitas', ['lengkap', 'tidak lengkap'])->nullable();
-            $table->enum('kondisi_kamar', ['bersih', 'belum bersih'])->nullable();
-            $table->enum('status_kamar', ['terisi', 'kosong'])->nullable();
+            $table->string('tipe_kamar',50);
+            $table->string('status_fasilitas',30);
+            $table->string('kondisi_kamar',30);
+            $table->string('status_kamar', 30);
             $table->string('catatan', 50)->nullable();
             $table->timestamps();
         });
