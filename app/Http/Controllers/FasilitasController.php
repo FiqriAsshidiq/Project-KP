@@ -34,13 +34,21 @@ class FasilitasController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input, tanpa 'tanggal'
         $request->validate([
-            'nama_fasilitas' => 'required|string|max:20',
+            'nama_fasilitas' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z\s]+$/', // Hanya huruf dan spasi yang diizinkan
+                'max:20',
+                'unique:fasilitas,nama_fasilitas', // Validasi unique pada tabel fasilitas
+            ],
             'kategori_id' => 'required|exists:kategoris,id',
-        ]);
-    
-        // Menyimpan data ke database, tanggal otomatis menggunakan current timestamp
+        ], [
+            // Pesan error khusus
+            'nama_fasilitas.regex' => 'Nama fasilitas hanya boleh berisi huruf dan spasi, contoh "Kasur".',
+            'nama_fasilitas.unique' => 'Nama fasilitas sudah ada, silakan gunakan nama lain.',
+        ]);    
+        // Menyimpan data ke database
         Fasilitas::create([
             'nama_fasilitas' => $request->nama_fasilitas,
             'kategori_id' => $request->kategori_id,
@@ -48,8 +56,8 @@ class FasilitasController extends Controller
     
         // Redirect ke halaman fasilitas dengan pesan sukses
         return redirect()->route('fasilitas')->with('success', 'Fasilitas berhasil ditambahkan.');
-        }
-        
+    }
+            
         public function edit($id)
         {
             $fasilitas = Fasilitas::where('id', $id)->firstOrFail();

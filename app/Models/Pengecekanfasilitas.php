@@ -12,6 +12,7 @@ class Pengecekanfasilitas extends Model
     protected $table = 'pengecekan_fasilitas';
 
     protected $fillable = [
+        'tanggal',
         'fasilitas_id',
         'jumlah_rusak'
     ];

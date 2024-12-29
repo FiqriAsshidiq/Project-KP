@@ -150,14 +150,6 @@ class FasilitasSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'nama_fasilitas' => 'Jendela',
-                'kategori_id' => '3',
-                'stok' => '0',
-                'penggunaan' => '0',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
                 'nama_fasilitas' => 'Pintu',
                 'kategori_id' => '3',
                 'stok' => '0',

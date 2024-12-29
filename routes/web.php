@@ -7,12 +7,13 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PengecekanfasilitasController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('landing'); 
+    return view('login'); 
 });
 
 
@@ -71,14 +72,36 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengecekan/create', [PengecekanfasilitasController::class, 'create'])->name('pengecekan.create');
     Route::post('/pengecekan/store', [PengecekanfasilitasController::class, 'store'])->name('pengecekan.store');
     Route::get('/pengecekan/search', [PengecekanfasilitasController::class, 'search'])->name('pengecekan.search');
-    Route::get('/pengecekan/export', [PengecekanController::class, 'export'])->name('pengecekan.export');
-    Route::get('/pengecekan/export-pdf/{bulan}/{tahun}', [PengecekanController::class, 'exportPdf'])->name('pengecekan.exportPdf');
+    Route::get('/pengecekan/tarnsaksi', [PengecekanfasilitasController::class, 'laporanFasilitasRusak'])->name('laporan.fasilitasrusak');
+    Route::get('/pengecekan/export', [PengecekanfasilitasController::class, 'export'])->name('pengecekan.export');
+    Route::get('/pengecekan/export-pdf/{bulan}/{tahun}', [PengecekanfasilitasController::class, 'exportPdf'])->name('pengecekan.exportPdf');
 
 });
 
 
-Route::get('/laporan/fasilitas', function () {return view('laporan.fasilitas');})->name('laporan.fasilitas');
+Route::middleware('auth')->group(function () {
+    Route::get('/pengecekan', [PengecekanfasilitasController::class, 'index'])->name('pengecekan');
+    Route::get('/pengecekan/create', [PengecekanfasilitasController::class, 'create'])->name('pengecekan.create');
+    Route::post('/pengecekan/store', [PengecekanfasilitasController::class, 'store'])->name('pengecekan.store');
+    Route::get('/pengecekan/search', [PengecekanfasilitasController::class, 'search'])->name('pengecekan.search');
+    Route::get('/pengecekan/tarnsaksi', [PengecekanfasilitasController::class, 'laporanFasilitasRusak'])->name('laporan.fasilitasrusak');
+    Route::get('/pengecekan/export', [PengecekanfasilitasController::class, 'export'])->name('pengecekan.export');
+    Route::get('/pengecekan/export-pdf/{bulan}/{tahun}', [PengecekanfasilitasController::class, 'exportPdf'])->name('pengecekan.exportPdf');
 
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna');
+    Route::get('/pengguna/create', [UserController::class, 'create'])->name('pengguna.create');
+    Route::post('/pengguna', [UserController::class, 'store'])->name('pengguna.store');
+    Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('pengguna.edit');
+    Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('pengguna.update');
+
+});
+
+Route::get('/laporan/fasilitas', function () {return view('laporan.fasilitas_rusak');})->name('laporan.fasilitas_rusak');
+Route::get('/laporan/fasilitas', function () {return view('laporan.fasilitas');})->name('laporan.fasilitas');
 Route::get('/laporan/transaksi', function () {return view('laporan.transaksi');})->name('laporan.transaksi');
 
 require __DIR__.'/auth.php';

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Fasilitas;
 use App\Models\Pengecekanfasilitas;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class PengecekanfasilitasController extends Controller
 {
@@ -59,5 +61,19 @@ class PengecekanfasilitasController extends Controller
         return view('pengecekan.index', compact('pengecekan_fasilitas', 'bulan', 'tahun'));
     }
 
+    public function exportPdf($bulan, $tahun)
+    {
+        // Mengambil data fasilitas berdasarkan bulan dan tahun yang dipilih
+        $pengecekan_fasilitas = Pengecekanfasilitas::with('fasilitas')
+                            ->whereYear('tanggal', $tahun)
+                            ->whereMonth('tanggal', $bulan)
+                            ->get();
+
+        // Mengenerate PDF dengan data fasilitas yang sesuai
+        $pdf = PDF::loadView('laporan.fasilitas_rusak', compact('pengecekan_fasilitas', 'bulan', 'tahun'));
+        
     
+        // Mendownload PDF dengan nama file yang sesuai
+        return $pdf->download('laporan-transaksi-' . $bulan . '-' . $tahun . '.pdf');
+    }
 }

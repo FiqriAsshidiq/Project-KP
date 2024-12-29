@@ -32,6 +32,14 @@ class TransaksiController extends Controller
             'barang_keluar' => 'required|integer|min:0',
         ]);
     
+        // Temukan fasilitas berdasarkan ID
+        $fasilitas = Fasilitas::find($request->fasilitas_id);
+        
+        // Jika stok yang diminta lebih besar dari stok yang tersedia, beri pesan error
+        if ($fasilitas->stok < $request->barang_keluar) {
+            return redirect()->back()->with('error', 'Tidak bisa mengambil barang, karena stok tidak mencukupi.');
+        }
+    
         // Simpan data transaksi
         $transaksi = Transaksi::create([
             'tanggal' => now(),
@@ -40,19 +48,15 @@ class TransaksiController extends Controller
             'barang_keluar' => $request->barang_keluar, // Simpan penggunaan barang
         ]);
     
-        // Temukan fasilitas berdasarkan ID
-        $fasilitas = Fasilitas::find($request->fasilitas_id);
-        $fasilitas->stok += $request->barang_masuk; 
-        if ($fasilitas->stok - $request->barang_keluar < 0) {
-            // Jika stok tersisa kurang dari 4, return dengan error message
-            return redirect()->back()->with('error', 'tidak bisa mengambil barang, karena stok 0');
-        }
-        $fasilitas->stok -= $request->barang_keluar;  // Kurangi stok
-        $fasilitas->penggunaan += $request->barang_keluar;  // Tambah penggunaan
+        // Update stok fasilitas
+        $fasilitas->stok += $request->barang_masuk;  // Tambah stok
+        $fasilitas->stok -= $request->barang_keluar; // Kurangi stok
+        $fasilitas->penggunaan += $request->barang_keluar; // Tambah penggunaan
         $fasilitas->save();
+    
         return redirect()->route('transaksi')->with('success', 'Transaksi berhasil ditambahkan.');
     }
-        
+                
     public function search(Request $request)
     {
         // Validasi input bulan dan tahun
@@ -90,10 +94,5 @@ class TransaksiController extends Controller
         // Mendownload PDF dengan nama file yang sesuai
         return $pdf->download('laporan-transaksi-' . $bulan . '-' . $tahun . '.pdf');
     }
-
-
-
-
-
 
 }

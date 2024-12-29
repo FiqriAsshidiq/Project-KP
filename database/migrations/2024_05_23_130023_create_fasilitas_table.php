@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fasilitas', function (Blueprint $table) {
             $table->id()->primary();
-            $table->string('nama_fasilitas', 30); 
+            $table->string('nama_fasilitas', 30)->unique(); 
             $table->unsignedBigInteger('kategori_id');
             $table->integer('stok')->nullable()->default(0);  
             $table->integer('penggunaan')->nullable()->default(0);  
