@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('tanggal')->nullable();
             $table->UnsignedBigInteger('fasilitas_id');
             $table->integer('barang_masuk')->default(0);
-            $table->integer('penggunaan_barang')->default(0);
+            $table->integer('barang_keluar')->default(0);
             $table->timestamps();
 
             $table->foreign('fasilitas_id')->references('id')->on('fasilitas')

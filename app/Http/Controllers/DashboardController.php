@@ -43,7 +43,7 @@ class DashboardController extends Controller
         $totalBarangMasuk = Transaksi::sum('barang_masuk');
 
         // total Barang Keluar
-        $totalBarangKeluar = Transaksi::sum('penggunaan_barang');
+        $totalBarangKeluar = Transaksi::sum('barang_keluar');
         
         // Menghitung jumlah user
         $totalUsers = User::count();

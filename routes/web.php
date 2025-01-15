@@ -8,6 +8,10 @@ use App\Http\Controllers\PengecekanfasilitasController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\OtherController;
+
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kamar/{id}/edit', [KamarController::class, 'edit'])->name('kamar.edit');
     Route::put('/kamar/{id}', [KamarController::class, 'update'])->name('kamar.update');
     Route::delete('/kamar/{id}', [KamarController::class, 'destroy'])->name('kamar.destroy');
+    Route::get('/kamar/search', [KamarController::class, 'search'])->name('kamar.search');
 
 });
 
@@ -75,29 +80,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengecekan/tarnsaksi', [PengecekanfasilitasController::class, 'laporanFasilitasRusak'])->name('laporan.fasilitasrusak');
     Route::get('/pengecekan/export', [PengecekanfasilitasController::class, 'export'])->name('pengecekan.export');
     Route::get('/pengecekan/export-pdf/{bulan}/{tahun}', [PengecekanfasilitasController::class, 'exportPdf'])->name('pengecekan.exportPdf');
+    Route::delete('/pengecekan/{id}', [PengecekanfasilitasController::class, 'destroy'])->name('pengecekan.destroy');
 
 });
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/pengecekan', [PengecekanfasilitasController::class, 'index'])->name('pengecekan');
-    Route::get('/pengecekan/create', [PengecekanfasilitasController::class, 'create'])->name('pengecekan.create');
-    Route::post('/pengecekan/store', [PengecekanfasilitasController::class, 'store'])->name('pengecekan.store');
-    Route::get('/pengecekan/search', [PengecekanfasilitasController::class, 'search'])->name('pengecekan.search');
-    Route::get('/pengecekan/tarnsaksi', [PengecekanfasilitasController::class, 'laporanFasilitasRusak'])->name('laporan.fasilitasrusak');
-    Route::get('/pengecekan/export', [PengecekanfasilitasController::class, 'export'])->name('pengecekan.export');
-    Route::get('/pengecekan/export-pdf/{bulan}/{tahun}', [PengecekanfasilitasController::class, 'exportPdf'])->name('pengecekan.exportPdf');
+    Route::get('/user', [UserController::class, 'index'])->name('user');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/userr/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/karyawan/kamar', [PegawaiController::class, 'index'])->name('kamar.karyawan');
+    Route::get('/karyawan/kamar/{id}/edit', [PegawaiController::class, 'edit'])->name('karyawan.edit');
+    Route::put('/karyawan/kamar/{id}', [PegawaiController::class, 'update'])->name('karyawan.update');
+    Route::get('/karyawan/search', [PegawaiController::class, 'search'])->name('karyawan.search');
+});
 
 Route::middleware('auth')->group(function () {
-    Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna');
-    Route::get('/pengguna/create', [UserController::class, 'create'])->name('pengguna.create');
-    Route::post('/pengguna', [UserController::class, 'store'])->name('pengguna.store');
-    Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('pengguna.edit');
-    Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('pengguna.update');
-
+    Route::get('/other', [OtherController::class, 'index'])->name('other');
+    Route::get('/other/search', [OtherController::class, 'search'])->name('other.search');
 });
 
 Route::get('/laporan/fasilitas', function () {return view('laporan.fasilitas_rusak');})->name('laporan.fasilitas_rusak');

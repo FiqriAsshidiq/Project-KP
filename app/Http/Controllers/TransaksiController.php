@@ -37,7 +37,7 @@ class TransaksiController extends Controller
         
         // Jika stok yang diminta lebih besar dari stok yang tersedia, beri pesan error
         if ($fasilitas->stok < $request->barang_keluar) {
-            return redirect()->back()->with('error', 'Tidak bisa mengambil barang, karena stok tidak mencukupi.');
+            return redirect()->back()->with('eror', 'Tidak bisa mengambil barang, karena stok tidak mencukupi.');
         }
     
         // Simpan data transaksi
@@ -56,6 +56,15 @@ class TransaksiController extends Controller
     
         return redirect()->route('transaksi')->with('success', 'Transaksi berhasil ditambahkan.');
     }
+    
+    // hapus
+    public function destroy($id)
+    {
+        $transaksi = Transaksi::where('id', $id)->firstOrFail();
+        $transaksi->delete();
+        return redirect()->route('transaksi')->with('success', 'Fasilitas berhasil dihapus.');
+    }
+
                 
     public function search(Request $request)
     {
@@ -94,5 +103,6 @@ class TransaksiController extends Controller
         // Mendownload PDF dengan nama file yang sesuai
         return $pdf->download('laporan-transaksi-' . $bulan . '-' . $tahun . '.pdf');
     }
+
 
 }

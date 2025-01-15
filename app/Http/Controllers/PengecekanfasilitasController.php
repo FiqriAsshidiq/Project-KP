@@ -61,6 +61,14 @@ class PengecekanfasilitasController extends Controller
         return view('pengecekan.index', compact('pengecekan_fasilitas', 'bulan', 'tahun'));
     }
 
+    // hapus
+    // hapus
+    public function destroy($id)
+    {
+        $pengecekan_fasilitas = Pengecekanfasilitas::where('id', $id)->firstOrFail();
+        $pengecekan_fasilitas->delete();
+        return redirect()->route('pengecekan')->with('success', 'Fasilitas berhasil dihapus.');
+    }
     public function exportPdf($bulan, $tahun)
     {
         // Mengambil data fasilitas berdasarkan bulan dan tahun yang dipilih

@@ -17,7 +17,7 @@ class KamarSeeder extends Seeder
         $singleRoomData = [];
         for ($i = 0; $i < 50; $i++) {
             $singleRoomData[] = [
-                'tipe_kamar' => 'single room',
+                'tipe_kamar' => 'Standar Room',
                 'status_fasilitas' => 'lengkap',
                 'kondisi_kamar' => 'bersih',
                 'status_kamar' => 'kosong',
@@ -31,7 +31,7 @@ class KamarSeeder extends Seeder
         $doubleRoomData = [];
         for ($i = 0; $i < 50; $i++) {
             $doubleRoomData[] = [
-                'tipe_kamar' => 'double room',
+                'tipe_kamar' => 'Standar Room',
                 'status_fasilitas' => 'tidak lengkap',
                 'kondisi_kamar' => 'belum bersih',
                 'status_kamar' => 'terisi',

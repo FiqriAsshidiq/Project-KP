@@ -16,7 +16,7 @@ class Transaksi extends Model
         'tanggal', 
         'fasilitas_id', 
         'barang_masuk',
-        'penggunaan_barang'
+        'barang_keluar'
     ];
 
     // Relasi ke model Fasilitas (one-to-many)

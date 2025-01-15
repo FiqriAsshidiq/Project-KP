@@ -68,8 +68,13 @@ class FasilitasController extends Controller
         {
             // Validasi input
         $request->validate([
-            'nama_fasilitas' => 'required|string|max:20'        ]);
-    
+            'nama_fasilitas' => ['required','string','regex:/^[a-zA-Z\s]+$/','unique:fasilitas,nama_fasilitas',],
+        ], 
+        [
+            // Pesan error khusus
+            'nama_fasilitas.regex' => 'Nama fasilitas hanya boleh berisi huruf dan spasi, contoh "Kasur".',
+            'nama_fasilitas.unique' => 'Nama fasilitas sudah ada, silakan gunakan nama lain.',
+        ]);    
         // Temukan fasilitas berdasarkan ID
         $fasilitas = Fasilitas::findOrFail($id);
                 

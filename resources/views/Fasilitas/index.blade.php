@@ -78,7 +78,7 @@
                                 <td class=" text-center">
                                     <x-secondary-button 
                                         tag="button"
-                                        onclick="window.location='{{ route('fasilitas.edit', $fasilitas->id) }}'">Edit
+                                        onclick="window.location='{{ route('fasilitas.edit', $fasilitas->id) }}'" class="bg-yellow-400">Edit
                                     </x-secondary-button>
                                     <x-danger-button 
                                         x-data=""

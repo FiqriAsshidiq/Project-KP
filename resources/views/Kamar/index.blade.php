@@ -31,8 +31,24 @@
 
                     <!-- tombol tambah -->
                     <div class="mb-4">
-                        <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('kamar.create') }}'">Tambah Kamar</x-primary-button>
-                    </div>
+    <form method="GET" action="{{ route('kamar.search') }}" class="mb-4">
+        <div class="flex items-center justify-between">
+            <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('kamar.create') }}'">
+                Tambah Kamar
+            </x-primary-button>
+            <div class="flex items-center ml-4">
+                <input 
+                    type="text" 
+                    name="search" 
+                    value="{{ request('search') }}" 
+                    placeholder="Cari kondisi kamar..." 
+                    class="border border-gray-300 rounded p-2 w-full sm:w-1/3"
+                >
+                <x-primary-button class="ml-4">{{ __('Cari') }}</x-primary-button>
+            </div>
+        </div>
+    </form>
+</div>
 
                     <x-table class="border-collapse border-5 border-black" cellspacing="0">
                         <x-slot name="header">
@@ -49,7 +65,7 @@
                         </x-slot>
                         @foreach ($kamars as $index => $kamar)
                             <tr>
-                                <td class=" text-center">{{ $index + 1 }}</td>
+                                <td class=" text-center">{{ $kamar->id }}</td>
                                 <td class=" text-center">{{ $kamar->tipe_kamar }}</td>
                                 <td class=" text-center">{{ $kamar->status_kamar }}</td>
                                 <td class=" text-center">{{ $kamar->kondisi_kamar }}</td>

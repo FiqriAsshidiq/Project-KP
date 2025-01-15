@@ -1,15 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-    <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
-    {{ __('Pengecekan Fasilitas') }}
+        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+            {{ __('Daftar Pengguna') }}
         </h2>
     </x-slot>
-    
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-
                     <!-- Notifikasi -->
 
                     @if (session('success'))
@@ -30,58 +29,46 @@
                     <br>
 
 
-                <div class="mb-4 px-8">
-                    <form method="GET" action="{{ route('pengecekan.search') }}">
-                        <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('pengecekan.create') }}'">Tambah Data</x-primary-button>
-                        <x-primary-button class="justify-center w-full sm:w-auto my-2.5 mr-[230px] bg-red-600" onclick="window.location='{{ route('pengecekan.exportPdf', ['bulan' => $bulan ?? now()->month, 'tahun' => $tahun ?? now()->year]) }}'">Export PDF</x-primary-button>
- 
-                        <label for="bulan" class="mr-[150px]" ></label>
-                        <select id="bulan" name="bulan" required>
-                            <option value="">Pilih Bulan</option>
-                            @for ($i = 1; $i <= 12; $i++)
-                                <option value="{{ $i }}">{{ \Carbon\Carbon::create()->month($i)->format('F') }}</option>
-                            @endfor
-                        </select>
+                <x-primary-button class="justify-center w-full sm:w-auto " onclick="window.location='{{ route('user.create') }}'">Tambah Akun</x-primary-button>
+                <br>
+                <br>
 
-                        <label for="tahun" ></label>
-                        <input type="number" id="tahun" name="tahun" value="{{ now()->year }}" required>
-                        
-
-                        <x-primary-button class="justify-center w-full sm:w-auto my-2.5">Cari</x-primary-button>
-                        <br>
-                    </form>
-                    </div>
-
-                        <!-- Tambah Pengecekan Button -->
-                    </div>
+                    <!-- Tabel Data Users -->
                     <x-table>
                         <x-slot name="header">
                             <tr>
-                                <th class=" text-center">No</th>
-                                <th class=" text-center">Tanggal</th>
-                                <th class=" text-center">Nama Fasilitas</th>
-                                <th class=" text-center">Jumlah Rusak</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Nama</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Telphone</th>
+                                <th class="text-center">Aksi</th>
+
                             </tr>
                         </x-slot>
-                        @foreach ($pengecekan_fasilitas as $index => $pengecekan_fasilitas)
+                        @php $num = 1; @endphp
+                        @foreach($users as $user)
                             <tr>
-                                <td class=" text-center">{{ $index + 1 }}</td>
-                                <td class=" text-center">{{ $pengecekan_fasilitas->tanggal }}</td>
-                                <td class=" text-center">{{ $pengecekan_fasilitas->fasilitas->nama_fasilitas }}</td>
-                                <td class=" text-center">{{ $pengecekan_fasilitas->jumlah_rusak}}</td>
+                                <td class="text-center">{{ $num++ }}</td>
+                                <td class="text-center">{{ $user->name }}</td>
+                                <td class="text-center">{{ $user->email }}</td>
+                                <td class="text-center">{{ $user->Telphone }}</td>
                                 <td class=" text-center">
+                                    <x-secondary-button 
+                                        tag="button"
+                                        onclick="window.location='{{ route('user.edit', $user->id) }}'" class="bg-yellow-400">Edit
+                                    </x-secondary-button>
                                     <x-danger-button 
                                         x-data=""
-                                        x-on:click.prevent="$dispatch('open-modal', 'confirm-pengecekan-deletion-{{ $pengecekan_fasilitas->id }}')"
-                                        x-on:click="$dispatch('set-action', '{{ route('pengecekan.destroy', $pengecekan_fasilitas->id) }}')"
+                                        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion-{{ $user->id }}')"
+                                        x-on:click="$dispatch('set-action', '{{ route('user.destroy', $user->id) }}')"
                                         >{{ __('Delete') }}</x-danger-button>
 
                                 </td>
                                 </tr>
 
                                 <!-- Modal Konfirmasi Penghapusan -->
-                                <x-modal name="confirm-pengecekan-deletion-{{ $pengecekan_fasilitas->id }}" focusable maxWidth="xl">
-                                <form method="POST" action="{{ route('pengecekan.destroy', $pengecekan_fasilitas->id) }}" class="p-6">
+                                <x-modal name="confirm-user-deletion-{{ $user->id }}" focusable maxWidth="xl">
+                                <form method="POST" action="{{ route('user.destroy', $user->id) }}" class="p-6">
                                   @csrf
                                   @method('DELETE')
                                    <h2 class=" m-3 text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -102,7 +89,7 @@
 
                                 </x-modal>
                         @endforeach
-                    </x-table>                   
+                    </x-table>                 
                 </div>
             </div>
         </div>

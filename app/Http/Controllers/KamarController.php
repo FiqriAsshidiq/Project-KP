@@ -25,7 +25,6 @@ class KamarController extends Controller
             'status_fasilitas' => 'required|string|max:30',
             'kondisi_kamar' => 'required|string|max:30',
             'status_kamar' => 'required|string|max:30',
-            'catatan' => 'nullable|string|max:50',
         ]);
 
         Kamar::create([
@@ -33,7 +32,6 @@ class KamarController extends Controller
             'status_fasilitas' => $request->status_fasilitas,
             'kondisi_kamar' => $request->kondisi_kamar,
             'status_kamar' => $request->status_kamar,
-            'catatan' => $request->catatan,
         ]);
 
         return redirect()->route('kamar')->with('success', 'Kamar berhasil ditambahkan.');
@@ -50,26 +48,37 @@ class KamarController extends Controller
         $kamar = Kamar::findOrFail($id);
 
         $validated = $request->validate([
-            'status_fasilitas' => 'required|in:lengkap,tidak lengkap',
-            'status_kamar' => 'required|in:terisi,kosong',
-            'catatan' => 'nullable|string|max:255',
+            'status_fasilitas' => 'required|string|max:30',
+            'kondisi_kamar' => 'required|string|max:30',
+            'status_kamar' => 'required|string|max:30',
+            'catatan' => ['nullable', 'string', 'max:20'],        
+        ],
+        [
+            // Pesan error khusus
+            'catatan.max' => 'tidak boleh lebih dari 30, singkat saja".',
         ]);
-
         $kamar->update($validated);
-
-        $notification = [
-            'message' => 'Data kamar berhasil diperbaharui',
-            'alert-type' => 'success'
-        ];
-
-        return redirect()->route('kamar')->with($notification);
+        return redirect()->route('kamar')->with('success', 'Kamar berhasil diubah.');
     }
 
     public function destroy($id)
     {
         $kamar = Kamar::where('id', $id)->firstOrFail();
         $kamar->delete();
-        return redirect()->route('kamar')->with('success', 'Transaksi berhasil dihapus.');
+        return redirect()->route('kamar')->with('success', 'Data Kamar Berhasil dihapus.');
     }   
     
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $kamars = Kamar::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('kondisi_kamar', 'like', "%{$search}%");
+            })
+            ->get();
+
+        return view('kamar.index', compact('kamars', 'search'));
+    }
+
 }
