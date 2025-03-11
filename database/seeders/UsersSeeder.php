@@ -19,7 +19,7 @@ class UsersSeeder extends Seeder
                 'name' => 'Manager',
                 'email' => 'Manager@gmail.com',
                 'Telphone' => '+62 81',
-                'password' => Hash::make('password'), // pastikan untuk mengganti dengan password yang aman
+                'password' => Hash::make('password'), 
                 'role_id' => '1',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -28,7 +28,7 @@ class UsersSeeder extends Seeder
                 'name' => 'Kepala Hoseeping',
                 'email' => 'Kepala@gmail.com',
                 'Telphone' => '+62 82',
-                'password' => Hash::make('password'), // pastikan untuk mengganti dengan password yang aman
+                'password' => Hash::make('password'), 
                 'role_id' => '2',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -37,7 +37,7 @@ class UsersSeeder extends Seeder
                 'name' => 'Karyawan',
                 'email' => 'Karyawan@gmail.com',
                 'Telphone' => '+62 83',
-                'password' => Hash::make('password'), // pastikan untuk mengganti dengan password yang aman
+                'password' => Hash::make('password'), 
                 'role_id' => '3',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -46,7 +46,7 @@ class UsersSeeder extends Seeder
                 'name' => 'Resepsionis',
                 'email' => 'FO@gmail.com',
                 'Telphone' => '+62 8322',
-                'password' => Hash::make('password'), // pastikan untuk mengganti dengan password yang aman
+                'password' => Hash::make('password'), 
                 'role_id' => '4',
                 'created_at' => now(),
                 'updated_at' => now(),

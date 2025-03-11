@@ -10,9 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\OtherController;
-
-
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -106,6 +104,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/other', [OtherController::class, 'index'])->name('other');
     Route::get('/other/search', [OtherController::class, 'search'])->name('other.search');
 });
+
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
 
 Route::get('/laporan/fasilitas', function () {return view('laporan.fasilitas_rusak');})->name('laporan.fasilitas_rusak');
 Route::get('/laporan/fasilitas', function () {return view('laporan.fasilitas');})->name('laporan.fasilitas');

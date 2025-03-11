@@ -1,16 +1,21 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight" style="font-size: 40px;">
             {{ __('Tambah Transaksi') }}
         </h2>
     </x-slot>
 
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="POST" action="{{ route('transaksi.store') }}" class="mt-6 space-y-6">
+    <div class="py-5 px-2">
+            <div class=" mx-auto sm:px-6 lg:px-8">
+                <h1>
+                    Form Tambah Transaksi
+                </h1>
+                <hr>
+                <br>    
+                <div class="sm:rounded-lg">
+                    <div >
+                        <form method="POST" action="{{ route('transaksi.store') }}" class="mt-6 space-y-6">
                         @csrf
 
                         @if (session('eror'))
@@ -62,6 +67,7 @@
                         <x-primary-button class="bg-green-400">Simpan</x-primary-button>
                         </div>
                     </form>
+                    <br><br><br>                    <br><br><br>
                 </div>
             </div>
         </div>

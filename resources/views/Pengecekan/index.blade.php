@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-    <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight" style="font-size: 40px;">
     {{ __('Pengecekan Fasilitas') }}
         </h2>
     </x-slot>
     
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+        <div class=" mx-auto sm:px-6 lg:px-8">
+            <div class="sm:rounded-lg">
+                <div >
 
                     <!-- Notifikasi -->
 
@@ -35,7 +35,7 @@
                         <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('pengecekan.create') }}'">Tambah Data</x-primary-button>
                         <x-primary-button class="justify-center w-full sm:w-auto my-2.5 mr-[230px] bg-red-600" onclick="window.location='{{ route('pengecekan.exportPdf', ['bulan' => $bulan ?? now()->month, 'tahun' => $tahun ?? now()->year]) }}'">Export PDF</x-primary-button>
  
-                        <label for="bulan" class="mr-[150px]" ></label>
+                        <label for="bulan" class="mr-[215px]" ></label>
                         <select id="bulan" name="bulan" required>
                             <option value="">Pilih Bulan</option>
                             @for ($i = 1; $i <= 12; $i++)
@@ -43,7 +43,7 @@
                             @endfor
                         </select>
 
-                        <label for="tahun" ></label>
+                        <label for="tahun"class="mr-[0px]" >Tahun</label>
                         <input type="number" id="tahun" name="tahun" value="{{ now()->year }}" required>
                         
 

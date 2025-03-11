@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-    <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight" style="font-size: 40px;">
     {{ __('Fasilitas') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+        <div class=" mx-auto sm:px-6 lg:px-8">
+            <div class="sm:rounded-lg">
+                <div >
 
                     <!-- Notifikasi -->
                     @if (session('success'))
@@ -36,7 +36,7 @@
                         <x-primary-button class="justify-center w-full sm:w-auto my-2.5 bg-red-600" onclick="window.location='{{ route('fasilitas.exportPdf', ['bulan' => $bulan ?? now()->month, 'tahun' => $tahun ?? now()->year]) }}'">Export PDF</x-primary-button>
 
  
-                        <label for="bulan" class="ml-[330px]" ></label>
+                        <label for="bulan" class="ml-[430px]" ></label>
                         <select id="bulan" name="bulan" required>
                             <option value="">Pilih Bulan</option>
                             @for ($i = 1; $i <= 12; $i++)
@@ -44,7 +44,7 @@
                             @endfor
                         </select>
 
-                        <label for="tahun" class="ml-[30px]"></label>
+                        <label for="tahun" class="ml-[0px]">Tahun</label>
                         <input type="number" id="tahun" name="tahun" value="{{ now()->year }}" required>
                         
 
@@ -76,10 +76,6 @@
                                 <td class=" text-center">{{ $fasilitas->stok }}</td>
 
                                 <td class=" text-center">
-                                    <x-secondary-button 
-                                        tag="button"
-                                        onclick="window.location='{{ route('fasilitas.edit', $fasilitas->id) }}'" class="bg-yellow-400">Edit
-                                    </x-secondary-button>
                                     <x-danger-button 
                                         x-data=""
                                         x-on:click.prevent="$dispatch('open-modal', 'confirm-fasilitas-deletion-{{ $fasilitas->id }}')"

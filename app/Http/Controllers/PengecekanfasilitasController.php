@@ -41,27 +41,27 @@ class PengecekanfasilitasController extends Controller
 
     public function search(Request $request)
     {
-        // Validasi input bulan dan tahun
+        
         $request->validate([
             'bulan' => 'required|integer|between:1,12',
             'tahun' => 'required|integer|min:1900|max:' . date('Y'),
         ]);
     
-        // Ambil data bulan dan tahun
+        
         $bulan = $request->input('bulan');
         $tahun = $request->input('tahun');
     
-        // Ambil data transaksi berdasarkan bulan dan tahun
+        
         $pengecekan_fasilitas = Pengecekanfasilitas::with('fasilitas')
                                 ->whereYear('tanggal', $tahun)
                                 ->whereMonth('tanggal', $bulan)
                                 ->get();
 
-        // Kirim data bulan, tahun, dan transaksi ke view
+        
         return view('pengecekan.index', compact('pengecekan_fasilitas', 'bulan', 'tahun'));
     }
 
-    // hapus
+    
     // hapus
     public function destroy($id)
     {
@@ -71,17 +71,17 @@ class PengecekanfasilitasController extends Controller
     }
     public function exportPdf($bulan, $tahun)
     {
-        // Mengambil data fasilitas berdasarkan bulan dan tahun yang dipilih
+        
         $pengecekan_fasilitas = Pengecekanfasilitas::with('fasilitas')
                             ->whereYear('tanggal', $tahun)
                             ->whereMonth('tanggal', $bulan)
                             ->get();
 
-        // Mengenerate PDF dengan data fasilitas yang sesuai
+        
         $pdf = PDF::loadView('laporan.fasilitas_rusak', compact('pengecekan_fasilitas', 'bulan', 'tahun'));
         
     
-        // Mendownload PDF dengan nama file yang sesuai
+        
         return $pdf->download('laporan-transaksi-' . $bulan . '-' . $tahun . '.pdf');
     }
 }

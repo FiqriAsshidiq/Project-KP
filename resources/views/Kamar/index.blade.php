@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-    <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight" style="font-size: 40px;">
     {{ __('Kamar') }}
         </h2>
     </x-slot>
     
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+        <div class=" mx-auto sm:px-6 lg:px-8">
+            <div class="sm:rounded-lg">
+                <div >
 
                     <!-- Notifikasi -->
 
@@ -31,25 +31,30 @@
 
                     <!-- tombol tambah -->
                     <div class="mb-4">
-    <form method="GET" action="{{ route('kamar.search') }}" class="mb-4">
-        <div class="flex items-center justify-between">
-            <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('kamar.create') }}'">
-                Tambah Kamar
-            </x-primary-button>
-            <div class="flex items-center ml-4">
-                <input 
-                    type="text" 
-                    name="search" 
-                    value="{{ request('search') }}" 
-                    placeholder="Cari kondisi kamar..." 
-                    class="border border-gray-300 rounded p-2 w-full sm:w-1/3"
-                >
-                <x-primary-button class="ml-4">{{ __('Cari') }}</x-primary-button>
-            </div>
-        </div>
-    </form>
-</div>
-
+                        <div class="mb-4 px-8">
+                            <!-- Tombol Tambah Kamar -->
+                            <x-primary-button class="justify-center w-full sm:w-auto" onclick="window.location='{{ route('kamar.create') }}'">
+                                Tambah Kamar
+                            </x-primary-button>
+                    
+                            <!-- Form Pencarian -->
+                            <form method="GET" action="{{ route('kamar.search') }}" class="mt-4">
+                                <div class="flex items-center">
+                                    <input 
+                                        type="text" 
+                                        name="search" 
+                                        value="{{ request('search') }}" 
+                                        placeholder="Cari kondisi kamar..." 
+                                        class="border border-gray-300 rounded p-2 w-full sm:w-1/3"
+                                    >
+                                    <x-primary-button class="ml-4">
+                                        {{ __('Cari') }}
+                                    </x-primary-button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
                     <x-table class="border-collapse border-5 border-black" cellspacing="0">
                         <x-slot name="header">
                             <tr>

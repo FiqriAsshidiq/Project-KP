@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight" style="font-size: 40px;">
             {{ __('Daftar Pengguna') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+        <div class=" mx-auto sm:px-6 lg:px-8">
+            <div class=" mx-auto sm:px-6 lg:px-8">
+                <div class="sm:rounded-lg">    
                     <!-- Notifikasi -->
 
                     @if (session('success'))
@@ -53,10 +53,11 @@
                                 <td class="text-center">{{ $user->email }}</td>
                                 <td class="text-center">{{ $user->Telphone }}</td>
                                 <td class=" text-center">
-                                    <x-secondary-button 
-                                        tag="button"
+                                    <x-primary-button 
+                                        x-data=""
                                         onclick="window.location='{{ route('user.edit', $user->id) }}'" class="bg-yellow-400">Edit
-                                    </x-secondary-button>
+                                    </x-primary-button>
+
                                     <x-danger-button 
                                         x-data=""
                                         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion-{{ $user->id }}')"

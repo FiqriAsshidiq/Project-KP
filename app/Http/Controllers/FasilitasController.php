@@ -38,23 +38,23 @@ class FasilitasController extends Controller
             'nama_fasilitas' => [
                 'required',
                 'string',
-                'regex:/^[a-zA-Z\s]+$/', // Hanya huruf dan spasi yang diizinkan
+                'regex:/^[a-zA-Z\s]+$/', 
                 'max:20',
-                'unique:fasilitas,nama_fasilitas', // Validasi unique pada tabel fasilitas
+                'unique:fasilitas,nama_fasilitas', 
             ],
             'kategori_id' => 'required|exists:kategoris,id',
         ], [
-            // Pesan error khusus
+            
             'nama_fasilitas.regex' => 'Nama fasilitas hanya boleh berisi huruf dan spasi, contoh "Kasur".',
             'nama_fasilitas.unique' => 'Nama fasilitas sudah ada, silakan gunakan nama lain.',
         ]);    
-        // Menyimpan data ke database
+        
         Fasilitas::create([
             'nama_fasilitas' => $request->nama_fasilitas,
             'kategori_id' => $request->kategori_id,
         ]);
     
-        // Redirect ke halaman fasilitas dengan pesan sukses
+        
         return redirect()->route('fasilitas')->with('success', 'Fasilitas berhasil ditambahkan.');
     }
             
@@ -66,21 +66,21 @@ class FasilitasController extends Controller
 
         public function update(Request $request, $id)
         {
-            // Validasi input
+            
         $request->validate([
             'nama_fasilitas' => ['required','string','regex:/^[a-zA-Z\s]+$/','unique:fasilitas,nama_fasilitas',],
         ], 
         [
-            // Pesan error khusus
+            
             'nama_fasilitas.regex' => 'Nama fasilitas hanya boleh berisi huruf dan spasi, contoh "Kasur".',
             'nama_fasilitas.unique' => 'Nama fasilitas sudah ada, silakan gunakan nama lain.',
         ]);    
-        // Temukan fasilitas berdasarkan ID
+       
         $fasilitas = Fasilitas::findOrFail($id);
                 
-        // Update nama_fasilitas
+        
         $fasilitas->nama_fasilitas = $request->nama_fasilitas;
-        $fasilitas->save(); // Simpan perubahan
+        $fasilitas->save(); 
     
         return redirect()->route('fasilitas')->with('success', 'Fasilitas berhasil diperbarui.');
     }
@@ -96,37 +96,37 @@ class FasilitasController extends Controller
 
     public function search(Request $request)
     {
-        // Validasi input bulan dan tahun
+        
         $request->validate([
             'bulan' => 'required|integer|between:1,12',
             'tahun' => 'required|integer|min:1900|max:' . date('Y'),
         ]);
     
-        // Ambil data bulan dan tahun
+        
         $bulan = $request->input('bulan');
         $tahun = $request->input('tahun');
     
-        // Ambil data fasilitas berdasarkan bulan dan tahun
+        
         $fasilitas = Fasilitas::whereYear('updated_at', $tahun)
                     ->whereMonth('updated_at', $bulan)
                     ->get();
     
-        // Kirim data bulan, tahun, dan fasilitas ke view
+        
         return view('fasilitas.index', compact('fasilitas', 'bulan', 'tahun'));
     }
     
     
     public function exportPdf($bulan, $tahun)
     {
-        // Mengambil data fasilitas berdasarkan bulan dan tahun yang dipilih
+        
         $fasilitas = Fasilitas::whereYear('updated_at', $tahun)
                              ->whereMonth('updated_at', $bulan)
                              ->get();
         
-        // Mengenerate PDF dengan data fasilitas yang sesuai
+        
         $pdf = PDF::loadView('laporan.fasilitas', compact('fasilitas', 'bulan', 'tahun'));
     
-        // Mendownload PDF dengan nama file yang sesuai
+        
         return $pdf->download('laporan-fasilitas-' . $bulan . '-' . $tahun . '.pdf');
     }
         

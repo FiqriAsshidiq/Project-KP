@@ -10,23 +10,23 @@ class UserController extends Controller
 {
     public function index()
     {
-        $data['roles'] = Role::all(); // Mengambil semua data roles
-        $data['users'] = User::with('role')->get(); // Mengambil data users dengan relasi role
-        return view('user.index', $data); // Mengirimkan data ke view
+        $data['roles'] = Role::all(); 
+        $data['users'] = User::with('role')->get(); 
+        return view('user.index', $data); 
     }
 
     // tambah
 
     public function create()
     {
-        // Hanya menampilkan role pegawai (role_id = 3)
+        
         $roles = Role::where('id', 3)->get();
         return view('user.create', compact('roles'));
     }
 
     public function store(Request $request)
     {
-        // Validasi input
+        
         $request->validate([
             'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:30|unique:users,name',
             'email' => 'required|email|unique:users,email|max:30',
@@ -34,14 +34,14 @@ class UserController extends Controller
             'password' => 'required|string|min:8',
             'role_id' => 'required|exists:roles,id',
         ], [
-            // Pesan error khusus
+            
             'name.regex' => 'Nama hanya boleh berisi huruf dan spasi, contoh "Jaki Fudin".',
             'name.unique' => 'Nama sudah ada, silakan gunakan nama lain.',
             'email.unique' => 'Email sudah terdaftar, gunakan email lain.',
             'Telphone.unique' => 'Nomor telepon sudah terdaftar, gunakan nomor lain.',
         ]);
     
-        // Simpan data pengguna
+        
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -57,7 +57,7 @@ class UserController extends Controller
     // edit
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Ambil data user berdasarkan ID
+        $user = User::findOrFail($id); 
         return view('user.edit', compact('user'));
     }
 
@@ -67,11 +67,11 @@ class UserController extends Controller
             
             'Telphone' => 'required|string|max:30',
             'email' => 'required|email|max:30|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8', // Password opsional
+            'password' => 'nullable|string|min:8', 
             'name' => ['required','string','regex:/^[a-zA-Z\s]+$/','unique:users,name',],
         ], 
         [
-            // Pesan error khusus
+            
             'name.regex' => 'Nama hanya boleh berisi huruf dan spasi, contoh "Kasur".',
             'name.unique' => 'Nama name sudah ada, silakan gunakan nama lain.',
         ]);
@@ -85,7 +85,7 @@ class UserController extends Controller
         ];
 
         if ($request->password) {
-            $dataToUpdate['password'] = bcrypt($request->password); // Hash password jika diisi
+            $dataToUpdate['password'] = bcrypt($request->password); // Hash password
         }
 
         $user->update($dataToUpdate);
